@@ -1,0 +1,26 @@
+# syntax=docker/sandbox-kit:3
+schemaVersion: "3"
+kind: mixin
+displayName: AI Engineering Lab gateway
+description: Route Claude Code through the AI Engineering Lab LLM gateway
+
+capabilities:
+  # Default policy is deny-all, and the Claude kit only allows Anthropic domains
+  - type: com.docker.sandbox/network-policy@2
+    config:
+      runtime:
+        allow:
+          - licenseportal.aiengineeringlab.co.uk
+
+  # ANTHROPIC_AUTH_TOKEN is a proxy-managed placeholder in the sandbox; the
+  # proxy injects the real token on requests to the gateway
+  - type: com.docker.sandbox/credential@1
+    description: AI Engineering Lab gateway token for Claude Code
+    config:
+      service: gds-anthropic-auth-token
+      phase: [runtime]
+      apiKey:
+        name: ANTHROPIC_AUTH_TOKEN
+        proxyManaged: true
+        inject:
+          - {domain: licenseportal.aiengineeringlab.co.uk, header: Authorization, format: "Bearer %s"}

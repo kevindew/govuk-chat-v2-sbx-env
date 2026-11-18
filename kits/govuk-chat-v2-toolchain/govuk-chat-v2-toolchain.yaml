@@ -1,0 +1,8 @@
+# syntax=docker/sandbox-kit:3
+# Toolchain for working on govuk-chat-v2.
+schemaVersion: "3"
+kind: mixin
+displayName: govuk-chat-v2 toolchain
+description: Tools for working on govuk-chat-v2
+
+dockerfile: govuk-chat-v2-toolchain.dockerfile
