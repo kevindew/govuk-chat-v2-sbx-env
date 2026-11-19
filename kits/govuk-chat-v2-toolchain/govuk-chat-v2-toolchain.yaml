@@ -6,3 +6,22 @@ displayName: govuk-chat-v2 toolchain
 description: Tools for working on govuk-chat-v2
 
 dockerfile: govuk-chat-v2-toolchain.dockerfile
+
+capabilities:
+  # uv downloads Python builds from GitHub releases
+  - type: com.docker.sandbox/network-policy@2
+    config:
+      runtime:
+        allow:
+          - github.com
+          - release-assets.githubusercontent.com
+          - objects.githubusercontent.com
+
+  # Installs the version from .python-version, as scripts/dev-prepare.zsh does.
+  # Runs on every start so it tracks changes; a no-op when already installed.
+  - type: com.docker.sandbox/lifecycle@1
+    config:
+      startup:
+        - description: Install the project's Python version
+          env: [WORKSPACE_DIR]
+          command: cd "$WORKSPACE_DIR" && uv python install
