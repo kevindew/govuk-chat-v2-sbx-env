@@ -5,7 +5,7 @@ agent: claude
 kits:
   - docker.io/sbx/claude:latest
   - ./kits/gds-llm-gateway # network allow + token injection for the gateway
-  - ./kits/govuk-chat-v2-toolchain # uv and the project's Python version
+  - ./kits/nvm-pnpm-toolchain # nvm, pnpm and the project's Node version
 
 workspace: ./govuk-chat-v2
 
