@@ -23,6 +23,14 @@ env:
 # --dangerously-skip-permissions.
 cmd: [--permission-mode, auto]
 
+# The CDK app needs USER, which isn't set in the sandbox. Runs on the host, as
+# sbxenv.yaml can't read host variables, and sets it to the host user plus -sbx.
+lifecycle:
+  postCreate:
+    - name: Set USER to the host user with a -sbx suffix
+      command: |
+        sbx exec -u root "$SBX_SANDBOX_NAME" sh -c 'printf "export USER=%s\n" "$1" >> /etc/sandbox-persistent.sh' sh "$USER-sbx"
+
 secrets:
   gds-anthropic-auth-token:
     command: jq -r .env.ANTHROPIC_AUTH_TOKEN /Users/KDew/.claude/settings.json
