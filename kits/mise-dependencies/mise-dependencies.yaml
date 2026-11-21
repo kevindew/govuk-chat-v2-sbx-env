@@ -25,6 +25,13 @@ capabilities:
             [settings]
             idiomatic_version_file_enable_tools = ["node", "pnpm"]
             TOML
+        # The workspace is a separate filesystem from $HOME, so without this
+        # pnpm puts its store in the workspace root as .pnpm-store.
+        - description: Keep the pnpm store out of the workspace
+          user: "1000"
+          command: |
+            mkdir -p /home/agent/.config/pnpm
+            echo "store-dir=/home/agent/.local/share/pnpm/store" > /home/agent/.config/pnpm/rc
       startup:
         - description: Install the project's Node, pnpm and pnpm dependencies
           env: [WORKSPACE_DIR]
