@@ -24,13 +24,21 @@ env:
 # --dangerously-skip-permissions.
 cmd: [--permission-mode, auto]
 
-# The CDK app needs USER, which isn't set in the sandbox. Runs on the host, as
-# sbxenv.yaml can't read host variables, and sets it to the host user plus -sbx.
+# These run on the host, so they can pass host values into the sandbox.
 lifecycle:
   postCreate:
+    # The CDK app needs USER, which isn't set in the sandbox.
     - name: Set USER to the host user with a -sbx suffix
       command: |
         sbx exec -u root "$SBX_SANDBOX_NAME" sh -c 'printf "export USER=%s\n" "$1" >> /etc/sandbox-persistent.sh' sh "$USER-sbx"
+    # The sandbox proxy passes Docker registry traffic straight through, so
+    # Zscaler intercepts it.
+    - name: Trust the host's Zscaler root CA in the sandbox
+      command: |
+        if security find-certificate -c "Zscaler Root CA" >/dev/null 2>&1; then
+          security find-certificate -c "Zscaler Root CA" -p |
+            sbx exec -i -u root "$SBX_SANDBOX_NAME" sh -c 'cat > /usr/local/share/ca-certificates/zscaler-root-ca.crt && update-ca-certificates'
+        fi
 
 secrets:
   gds-anthropic-auth-token:
