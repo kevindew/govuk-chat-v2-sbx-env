@@ -1,0 +1,64 @@
+name: CI
+
+on:
+  workflow_dispatch: {}
+  push:
+    branches:
+      - main
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  format:
+    name: Format
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+
+      - uses: jdx/mise-action@v5.2.7
+
+      - name: Check formatting
+        run: mise run format
+
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+
+      - uses: jdx/mise-action@v5.2.7
+
+      - name: Lint mise config
+        run: mise run lint
+
+  validate-kits:
+    name: Validate SBX kits
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+
+      - uses: jdx/mise-action@v5.2.7
+
+      - name: Validate kits
+        run: mise run validate-kits
+
+  sbx-env-plan:
+    name: Test run sbx env plan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+
+      - name: Install sbx
+        run: |
+          curl -fsSL https://get.docker.com | sudo REPO_ONLY=1 sh
+          sudo apt-get install -y docker-sbx
+
+      # Checks sbxenv.yaml without a Docker sign-in. It doesn't validate the
+      # kits themselves, as that needs a builder sandbox. The workspace has to
+      # exist, but can be empty.
+      - name: Run sbx env plan
+        run: |
+          mkdir govuk-chat-v2
+          sbx env plan --no-input

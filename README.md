@@ -23,7 +23,7 @@ An [sbx env](https://docs.docker.com/reference/cli/sbx/env/) for working with
 ### Development
 
 [mise](https://mise.jdx.dev/) installs the tools this repo uses. Run
-`mise install`, then `mise run format` to format files.
+`mise install` for dependencies. See [`mise.toml`](mise.toml) for tasks.
 
 ## Licence
 
