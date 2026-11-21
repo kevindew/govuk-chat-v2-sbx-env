@@ -16,7 +16,7 @@ An [sbx env](https://docs.docker.com/reference/cli/sbx/env/) for working with
 
 ### Usage
 
-- `./setup.sh` to get setup.
+- `./setup.sh` to get set up.
 - `sbx env run` to start the sandbox.
 - `sbx env rm` to delete it.
 

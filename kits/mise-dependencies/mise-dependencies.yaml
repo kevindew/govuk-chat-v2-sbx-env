@@ -16,7 +16,7 @@ capabilities:
     config:
       install:
         # Mise config in the sandbox, not the workspace.
-        # TODO: If mise works for us set-up a mise config in the repo
+        # TODO: If mise works for us set up a mise config in the repo
         - description: Make mise read .nvmrc and packageManager
           user: "1000"
           command: |
