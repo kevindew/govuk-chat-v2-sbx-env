@@ -1,0 +1,37 @@
+[settings]
+lockfile = true
+lockfile_platforms = ["linux-x64", "macos-arm64"]
+
+[tools]
+node = "26"
+"npm:prettier" = "3"
+
+[tasks.format]
+description = "Format files, or check them in CI"
+run = """
+if [ -n "$CI" ]; then
+  mise fmt --check
+  prettier . --check
+else
+  mise fmt
+  prettier . --write
+fi
+"""
+
+[tasks.lint]
+description = "Check task definitions and that mise.lock matches mise.toml"
+run = """
+mise tasks validate
+mise lock --check
+"""
+
+# Each kit's syntax line makes BuildKit build it with Docker's kit builder,
+# which fails on an invalid kit.
+[tasks.validate-kits]
+description = "Build each kit to check it's valid"
+run = """
+for kit in kits/*/; do
+  name=$(basename "$kit")
+  docker buildx build -f "$kit$name.yaml" -o type=cacheonly "$kit"
+done
+"""

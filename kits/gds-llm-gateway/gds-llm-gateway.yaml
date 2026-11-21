@@ -23,4 +23,6 @@ capabilities:
         name: ANTHROPIC_AUTH_TOKEN
         proxyManaged: true
         inject:
-          - {domain: licenseportal.aiengineeringlab.co.uk, header: Authorization, format: "Bearer %s"}
+          - domain: licenseportal.aiengineeringlab.co.uk
+            header: Authorization
+            format: "Bearer %s"

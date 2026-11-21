@@ -20,6 +20,11 @@ An [sbx env](https://docs.docker.com/reference/cli/sbx/env/) for working with
 - `sbx env run` to start the sandbox.
 - `sbx env rm` to delete it.
 
+### Development
+
+[mise](https://mise.jdx.dev/) installs the tools this repo uses. Run
+`mise install`, then `mise run format` to format files.
+
 ## Licence
 
 [MIT License](LICENCE)
