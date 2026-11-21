@@ -4,8 +4,9 @@ agent: claude
 
 kits:
   - docker.io/sbx/claude:latest
-  - ./kits/gds-llm-gateway # network allow + token injection for the gateway
-  - ./kits/nvm-pnpm-toolchain # nvm, pnpm and the project's Node version
+  - ./kits/gds-llm-gateway
+  - docker.io/sbx/mise:latest
+  - ./kits/mise-dependencies
 
 workspace: ./govuk-chat-v2
 
@@ -19,11 +20,9 @@ env:
   CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS: "1"
 
 # Start Claude Code in auto mode instead of the kit's default of
-# --dangerously-skip-permissions. cmd replaces the kit's default args.
+# --dangerously-skip-permissions.
 cmd: [--permission-mode, auto]
 
-# Real gateway token, read on the host from Claude Code's settings. It is only
-# ever injected by the proxy, never visible inside the sandbox.
 secrets:
   gds-anthropic-auth-token:
     command: jq -r .env.ANTHROPIC_AUTH_TOKEN /Users/KDew/.claude/settings.json

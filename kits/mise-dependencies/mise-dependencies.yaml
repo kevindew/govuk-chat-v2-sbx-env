@@ -1,0 +1,40 @@
+# syntax=docker/sandbox-kit:3
+schemaVersion: "3"
+kind: mixin
+displayName: mise dependencies
+description: The project's Node and pnpm versions via mise, and pnpm dependencies
+
+capabilities:
+  - type: com.docker.sandbox/network-policy@2
+    config:
+      runtime:
+        allow:
+          - nodejs.org
+          - registry.npmjs.org
+
+  - type: com.docker.sandbox/lifecycle@1
+    config:
+      install:
+        # Mise config in the sandbox, not the workspace.
+        # TODO: If mise works for us set-up a mise config in the repo
+        - description: Make mise read .nvmrc and packageManager
+          user: "1000"
+          command: |
+            mkdir -p /home/agent/.config/mise
+            cat > /home/agent/.config/mise/config.toml <<'TOML'
+            [settings]
+            idiomatic_version_file_enable_tools = ["node", "pnpm"]
+            TOML
+      startup:
+        - description: Install the project's Node, pnpm and pnpm dependencies
+          env: [WORKSPACE_DIR]
+          command:
+            - bash
+            - -c
+            - |
+              set -eu
+              export HOME=/home/agent
+              . /etc/profile.d/mise-env.sh
+              cd "$WORKSPACE_DIR"
+              mise install
+              pnpm install
