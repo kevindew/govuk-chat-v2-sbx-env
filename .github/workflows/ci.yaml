@@ -39,10 +39,8 @@ jobs:
     steps:
       - uses: actions/checkout@v7.0.1
 
-      - uses: jdx/mise-action@v5.2.8
-
       - name: Validate kits
-        run: mise run validate-kits
+        run: scripts/validate-kits.sh
 
   sbx-env-plan:
     name: Test run sbx env plan
