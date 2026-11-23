@@ -1,22 +1,7 @@
 [settings]
+idiomatic_version_file_enable_tools = ["node", "pnpm"]
 lockfile = true
 lockfile_platforms = ["linux-x64", "macos-arm64"]
-
-[tools]
-node = "26"
-"npm:prettier" = "3"
-
-[tasks.format]
-description = "Format files, or check them in CI"
-run = """
-if [ -n "$CI" ]; then
-  mise fmt --check
-  prettier . --check
-else
-  mise fmt
-  prettier . --write
-fi
-"""
 
 [tasks.lint]
 description = "Check task definitions and that mise.lock matches mise.toml"

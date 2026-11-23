@@ -22,8 +22,13 @@ An [sbx env](https://docs.docker.com/reference/cli/sbx/env/) for working with
 
 ### Development
 
-[mise](https://mise.jdx.dev/) installs the tools this repo uses. Run
-`mise install` for dependencies. See [`mise.toml`](mise.toml) for tasks.
+You need the Node version in [`.nvmrc`](.nvmrc) and the pnpm version in
+[`package.json`](package.json). [nvm](https://github.com/nvm-sh/nvm) or
+[mise](https://mise.jdx.dev/) can install them. Then:
+
+- `pnpm install` for dependencies.
+- `scripts/format.sh` to format files.
+- `scripts/validate-kits.sh` to check each kit builds.
 
 ## Licence
 

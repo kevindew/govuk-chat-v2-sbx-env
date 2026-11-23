@@ -1,0 +1,9 @@
+{
+  "name": "govuk-chat-v2-sbx-env",
+  "private": true,
+  "license": "MIT",
+  "packageManager": "pnpm@12.23.0",
+  "devDependencies": {
+    "prettier": "3.10.1"
+  }
+}
