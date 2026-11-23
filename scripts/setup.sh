@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-cd "$(dirname "$0")"
+cd "$(dirname "$0")/.."
 
 REPO_URL="https://github.com/govuk-once/govuk-chat-v2"
 REPO_DIR="govuk-chat-v2"
