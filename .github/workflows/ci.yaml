@@ -49,7 +49,7 @@ jobs:
       - name: Install sbx
         run: |
           curl -fsSL https://get.docker.com | sudo REPO_ONLY=1 sh
-          sudo apt-get install -y docker-sbx
+          sudo apt-get install -y --no-install-recommends docker-sbx
 
       # Checks sbxenv.yaml without a Docker sign-in. It doesn't validate the
       # kits themselves, as that needs a builder sandbox. The workspace has to
