@@ -6,7 +6,6 @@ workflows:
     '.github/workflows/ci.yaml':
         - 'actions/checkout@v7.0.1'
         - 'actions/setup-node@v6.2.0'
-        - 'jdx/mise-action@v5.2.8'
 dependencies:
     'actions/checkout@v7.0.1':
         ref: 'v7.0.1'
@@ -18,8 +17,3 @@ dependencies:
         commit: 'sha1-6044e13b5dc448c55e2357c09f80417699197238'
         owner_id: 44036562
         repo_id: 189476904
-    'jdx/mise-action@v5.2.8':
-        ref: 'v5.2.8'
-        commit: 'sha1-d5574b52816a478f9d4e6529a3f6ff17a8a36785'
-        owner_id: 216188
-        repo_id: 738284564

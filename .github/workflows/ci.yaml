@@ -31,17 +31,6 @@ jobs:
       - name: Check formatting
         run: scripts/format.sh
 
-  lint:
-    name: Lint
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v7.0.1
-
-      - uses: jdx/mise-action@v5.2.8
-
-      - name: Lint mise config
-        run: mise run lint
-
   validate-kits:
     name: Validate SBX kits
     runs-on: ubuntu-latest

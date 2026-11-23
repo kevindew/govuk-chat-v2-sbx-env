@@ -1,11 +1,2 @@
 [settings]
 idiomatic_version_file_enable_tools = ["node", "pnpm"]
-lockfile = true
-lockfile_platforms = ["linux-x64", "macos-arm64"]
-
-[tasks.lint]
-description = "Check task definitions and that mise.lock matches mise.toml"
-run = """
-mise tasks validate
-mise lock --check
-"""
