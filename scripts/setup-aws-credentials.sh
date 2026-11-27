@@ -23,7 +23,7 @@ copy_aws_credentials() {
   AWS_ROLE="${answer:-$AWS_ROLE}"
   read -rp "AWS region [$AWS_REGION]: " answer
   AWS_REGION="${answer:-$AWS_REGION}"
-  read -rp "Expiry time [$AWS_EXPIRY_TIME]: " answer
+  read -rp "Expiry time (applies to new sessions only) [$AWS_EXPIRY_TIME]: " answer
   AWS_EXPIRY_TIME="${answer:-$AWS_EXPIRY_TIME}"
 
   echo "Getting AWS credentials for $AWS_ROLE"
@@ -39,7 +39,11 @@ copy_aws_credentials() {
       printf "[default]\nregion = %s\ncredential_process = cat %s/.aws/credentials.json\n" "$1" "$HOME" > ~/.aws/config
     ' sh "$AWS_REGION"
 
-  echo "AWS credentials for $AWS_ROLE are in the sandbox, they expire in $AWS_EXPIRY_TIME ⏳"
+  # Expiration is in UTC, for example 2026-11-28T00:47:20+00:00
+  expiration=$(printf '%s' "$credentials" | sed -n 's/.*"Expiration": *"\([^"]*\)".*/\1/p')
+  expires_at=$(date -j -u -f "%Y-%m-%dT%H:%M:%S" "${expiration:0:19}" +%s)
+
+  echo "AWS credentials for $AWS_ROLE are in the sandbox, they expire at $(date -r "$expires_at" +%H:%M) ⏳"
 }
 
 remove_aws_credentials() {
