@@ -2,7 +2,7 @@
 schemaVersion: "3"
 kind: mixin
 displayName: mise dependencies
-description: The project's Node and pnpm versions via mise, and pnpm dependencies
+description: Using mise to install the projects dependencies
 
 capabilities:
   - type: com.docker.sandbox/network-policy@2
@@ -33,7 +33,7 @@ capabilities:
             mkdir -p /home/agent/.config/pnpm
             echo "store-dir=/home/agent/.local/share/pnpm/store" > /home/agent/.config/pnpm/rc
       startup:
-        - description: Install the project's Node, pnpm and pnpm dependencies
+        - description: Install mise and subsequent dependencies
           env: [WORKSPACE_DIR]
           command:
             - bash
@@ -44,4 +44,5 @@ capabilities:
               . /etc/profile.d/mise-env.sh
               cd "$WORKSPACE_DIR"
               mise install
+
               pnpm install
