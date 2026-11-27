@@ -13,6 +13,7 @@ An [sbx env](https://docs.docker.com/reference/cli/sbx/env/) for working with
 
 - Docker Sandboxes [installed](https://docs.docker.com/ai/sandboxes/install/).
 - GDS AI Engineering Claude Code configured at `~/.claude`.
+- Git configured on your host machine
 
 ### Usage
 
