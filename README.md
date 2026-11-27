@@ -22,12 +22,12 @@ An [sbx env](https://docs.docker.com/reference/cli/sbx/env/) for working with
 
 ### Development
 
-You need the Node version in [`.nvmrc`](.nvmrc) and the pnpm version in
-[`package.json`](package.json). [nvm](https://github.com/nvm-sh/nvm) or
-[mise](https://mise.jdx.dev/) can install them. Then:
+You need [mise](https://mise.jdx.dev/). Then:
 
+- `mise install` for Node, pnpm and ShellCheck.
 - `pnpm install` for dependencies.
 - `scripts/format.sh` to format files.
+- `scripts/shellcheck.sh` to lint the shell scripts.
 - `scripts/validate-kits.sh` to check each kit builds.
 
 ### Known Issues
