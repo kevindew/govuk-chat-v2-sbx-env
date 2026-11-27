@@ -30,6 +30,16 @@ You need the Node version in [`.nvmrc`](.nvmrc) and the pnpm version in
 - `scripts/format.sh` to format files.
 - `scripts/validate-kits.sh` to check each kit builds.
 
+### Known Issues
+
+#### CDK Synth fails in the sandbox
+
+Running CDK Synth fails due to a dependency on a Python dependency on
+the private repo: `govuk-chat-v2-private`. The bundling runs in a Docker
+container, and the container's git requests don't get the sandbox proxy's
+credential substitution, so GitHub receives the placeholder token instead
+of a real one.
+
 ## Licence
 
 [MIT License](LICENCE)
