@@ -35,6 +35,20 @@ lifecycle:
       command: |
         sbx exec "$SBX_SANDBOX_NAME" git config --global user.name "$(git config user.name)"
         sbx exec "$SBX_SANDBOX_NAME" git config --global user.email "$(git config user.email)"
+    # The key comes from scripts/setup-github-signing-key.sh. Without it,
+    # commits from the sandbox are unsigned.
+    - name: Sign commits in the sandbox with its own SSH key
+      command: |
+        key="$HOME/.ssh/govuk-chat-v2-sbx-signing"
+        if [ -f "$key" ]; then
+          sbx exec -i "$SBX_SANDBOX_NAME" sh -c '
+            mkdir -p ~/.ssh
+            (umask 077 && cat > ~/.ssh/govuk-chat-v2-sbx-signing)
+            git config --global gpg.format ssh
+            git config --global user.signingkey ~/.ssh/govuk-chat-v2-sbx-signing
+            git config --global commit.gpgsign true
+          ' <"$key"
+        fi
     # The sandbox proxy passes Docker registry traffic straight through, so
     # Zscaler intercepts it.
     - name: Trust the host's Zscaler root CA in the sandbox

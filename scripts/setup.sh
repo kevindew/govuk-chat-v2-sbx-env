@@ -16,6 +16,9 @@ fi
 echo "== Setting up GitHub Token"
 scripts/setup-github-token.sh
 
+echo "== Setting up GitHub signing key"
+scripts/setup-github-signing-key.sh
+
 echo "== Creating the sandbox"
 if sbx ls 2>/dev/null | awk 'NR>1 {print $1}' | grep -qx govuk-chat-v2; then
   echo "govuk-chat-v2 sandbox already exists, skipping (sbx env rm to recreate)"
