@@ -24,13 +24,15 @@ capabilities:
           # bundling script
           - pypi.org
           - files.pythonhosted.org
+          # AWS CLI downloads
+          - awscli.amazonaws.com
 
   - type: com.docker.sandbox/lifecycle@1
     config:
       install:
         # Mise config in the sandbox, not the workspace.
         # TODO: If mise works for us set up a mise config in the repo
-        - description: Make mise read .nvmrc, packageManager and .python-version, and install uv
+        - description: Use mise to install dependencies in the sandbox
           user: "1000"
           command: |
             mkdir -p /home/agent/.config/mise
@@ -42,6 +44,7 @@ capabilities:
             # May want to add a .tools-version file to govuk-chat-v2 to set the
             # version while still supporting the setup-uv action
             uv = "latest"
+            aws-cli = "latest"
             TOML
         # The workspace is a separate filesystem from $HOME, so without this
         # pnpm puts its store in the workspace root as .pnpm-store.

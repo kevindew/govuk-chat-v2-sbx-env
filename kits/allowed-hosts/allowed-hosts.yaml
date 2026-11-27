@@ -15,3 +15,5 @@ capabilities:
           - d2glxqk2uabbnd.cloudfront.net
           # Amazon Linux build images
           - cdn.amazonlinux.com
+          # AWS service endpoints, such as sts.eu-west-1.amazonaws.com
+          - "**.amazonaws.com"

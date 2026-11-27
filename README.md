@@ -14,12 +14,14 @@ An [sbx env](https://docs.docker.com/reference/cli/sbx/env/) for working with
 - Docker Sandboxes [installed](https://docs.docker.com/ai/sandboxes/install/).
 - GDS AI Engineering Claude Code configured at `~/.claude`.
 - Git configured on your host machine
+- [GDS CLI](https://github.com/alphagov/gds-cli) for AWS credentials
 
 ### Usage
 
 - `scripts/setup.sh` to get set up.
 - `sbx env run` to start the sandbox.
-- `sbx env rm` to delete it.
+- `scripts/setup-aws-credentials.sh` to refresh the sandbox's AWS credentials.
+- `sbx env rm` to delete the sandbox.
 
 ### Development
 

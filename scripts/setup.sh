@@ -28,3 +28,6 @@ if sbx ls 2>/dev/null | awk 'NR>1 {print $1}' | grep -qx govuk-chat-v2; then
 else
   sbx env create
 fi
+
+echo "== Setting up AWS credentials"
+scripts/setup-aws-credentials.sh
