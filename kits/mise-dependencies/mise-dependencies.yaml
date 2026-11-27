@@ -64,3 +64,5 @@ capabilities:
               mise install
 
               pnpm install
+
+              uv sync --all-packages --dev

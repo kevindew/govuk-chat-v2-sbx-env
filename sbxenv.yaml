@@ -43,3 +43,5 @@ lifecycle:
 secrets:
   gds-anthropic-auth-token:
     command: jq -r .env.ANTHROPIC_AUTH_TOKEN "$HOME/.claude/settings.json"
+  github:
+    command: gh auth token
