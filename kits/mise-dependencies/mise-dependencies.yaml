@@ -11,19 +11,37 @@ capabilities:
         allow:
           - nodejs.org
           - registry.npmjs.org
+          # Python and uv binaries come from GitHub releases
+          - api.github.com
+          - github.com
+          - release-assets.githubusercontent.com
+          - objects.githubusercontent.com
+          # mise looks up precompiled Python builds here
+          - mise-versions.jdx.dev
+          # Trust root for verifying uv's GitHub artifact attestations
+          - tuf-repo-cdn.sigstore.dev
+          # PyPI's index and package files, for uv and the CDK Python
+          # bundling script
+          - pypi.org
+          - files.pythonhosted.org
 
   - type: com.docker.sandbox/lifecycle@1
     config:
       install:
         # Mise config in the sandbox, not the workspace.
         # TODO: If mise works for us set up a mise config in the repo
-        - description: Make mise read .nvmrc and packageManager
+        - description: Make mise read .nvmrc, packageManager and .python-version, and install uv
           user: "1000"
           command: |
             mkdir -p /home/agent/.config/mise
             cat > /home/agent/.config/mise/config.toml <<'TOML'
             [settings]
-            idiomatic_version_file_enable_tools = ["node", "pnpm"]
+            idiomatic_version_file_enable_tools = ["node", "pnpm", "python"]
+
+            [tools]
+            # May want to add a .tools-version file to govuk-chat-v2 to set the
+            # version while still supporting the setup-uv action
+            uv = "latest"
             TOML
         # The workspace is a separate filesystem from $HOME, so without this
         # pnpm puts its store in the workspace root as .pnpm-store.

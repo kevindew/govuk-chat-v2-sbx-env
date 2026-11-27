@@ -15,8 +15,3 @@ capabilities:
           - d2glxqk2uabbnd.cloudfront.net
           # Amazon Linux build images
           - cdn.amazonlinux.com
-          # The Python bundling script installs uv and dependencies with pip
-          # and uv, which use pypi.org for the index and files.pythonhosted.org
-          # for the packages themselves
-          - pypi.org
-          - files.pythonhosted.org
