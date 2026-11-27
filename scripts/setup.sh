@@ -16,6 +16,9 @@ fi
 echo "== Setting up GitHub Token"
 scripts/setup-github-token.sh
 
+echo "== Setting up CDK GitHub Token"
+scripts/setup-cdk-github-token.sh
+
 echo "== Setting up GitHub signing key"
 scripts/setup-github-signing-key.sh
 

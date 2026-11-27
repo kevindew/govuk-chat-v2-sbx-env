@@ -31,6 +31,15 @@ lifecycle:
     - name: Set USER to the host user with a -sbx suffix
       command: |
         sbx exec -u root "$SBX_SANDBOX_NAME" sh -c 'printf "export USER=%s\n" "$1" >> /etc/sandbox-persistent.sh' sh "$USER-sbx"
+    # CDK bundling passes GITHUB_TOKEN into a Docker container, which the
+    # sandbox proxy can't add credentials to, so this is the real token. It
+    # comes from scripts/setup-cdk-github-token.sh.
+    - name: Set GITHUB_TOKEN for CDK bundling
+      command: |
+        if security find-generic-password -s govuk-chat-v2-sbx-cdk-github >/dev/null 2>&1; then
+          security find-generic-password -s govuk-chat-v2-sbx-cdk-github -w |
+            sbx exec -i -u root "$SBX_SANDBOX_NAME" sh -c 'printf "export GITHUB_TOKEN=%s\n" "$(cat)" >> /etc/sandbox-persistent.sh'
+        fi
     - name: Use the host's Git identity in the sandbox
       command: |
         sbx exec "$SBX_SANDBOX_NAME" git config --global user.name "$(git config user.name)"
