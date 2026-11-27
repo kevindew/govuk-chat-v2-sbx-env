@@ -1,6 +1,6 @@
 # GOV.UK Chat v2 SBX env
 
-**⚠️ Experimental and incomplete**
+**⚠️ Experimental**
 
 An [sbx env](https://docs.docker.com/reference/cli/sbx/env/) for working with
 [GOV.UK Chat v2](https://github.com/govuk-once/govuk-chat-v2) on
