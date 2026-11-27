@@ -31,6 +31,10 @@ lifecycle:
     - name: Set USER to the host user with a -sbx suffix
       command: |
         sbx exec -u root "$SBX_SANDBOX_NAME" sh -c 'printf "export USER=%s\n" "$1" >> /etc/sandbox-persistent.sh' sh "$USER-sbx"
+    - name: Use the host's Git identity in the sandbox
+      command: |
+        sbx exec "$SBX_SANDBOX_NAME" git config --global user.name "$(git config user.name)"
+        sbx exec "$SBX_SANDBOX_NAME" git config --global user.email "$(git config user.email)"
     # The sandbox proxy passes Docker registry traffic straight through, so
     # Zscaler intercepts it.
     - name: Trust the host's Zscaler root CA in the sandbox
