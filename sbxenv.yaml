@@ -44,4 +44,4 @@ secrets:
   gds-anthropic-auth-token:
     command: jq -r .env.ANTHROPIC_AUTH_TOKEN "$HOME/.claude/settings.json"
   github:
-    command: gh auth token
+    command: security find-generic-password -s govuk-chat-v2-sbx-github -w
